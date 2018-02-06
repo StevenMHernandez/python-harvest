@@ -110,10 +110,10 @@ class Harvest(object):
 
     ## Client Contacts
 
-    def contacts(self, updated_since=None):
-        url = '/contacts'
+    def contacts(self, page=1, updated_since=None):
+        url = '/contacts?page={0}'.format(page)
         if updated_since is not None:
-            url = '{0}?updated_since={1}'.format(url, updated_since)
+            url = '{0}&updated_since={1}'.format(url, updated_since)
         return self._get(url)
 
     def get_contact(self, contact_id):
@@ -139,10 +139,10 @@ class Harvest(object):
 
     ## Clients
 
-    def clients(self, updated_since=None):
-        url = '/clients'
+    def clients(self, page=1, updated_since=None):
+        url = '/clients?page={0}'.format(page)
         if updated_since is not None:
-            url = '{0}?updated_since={1}'.format(url, updated_since)
+            url = '{0}&updated_since={1}'.format(url, updated_since)
         return self._get(url)
 
     def get_client(self, client_id):
@@ -182,7 +182,7 @@ class Harvest(object):
 
     ## Projects
 
-    def projects(self, client=None, page=1):
+    def projects(self, page=1, client=None):
         url = '/projects?page={0}'.format(page)
         if client:
             # You can filter by client_id and updated_since.
@@ -221,11 +221,11 @@ class Harvest(object):
 
     ## Tasks
 
-    def tasks(self, updated_since=None):
-        # /tasks?updated_since=2010-09-25+18%3A30
+    def tasks(self, page=1, updated_since=None):
+        url = '/tasks?page={0}'.format(page)
         if updated_since:
-            return self._get('/tasks?updated_since={0}'.format(updated_since))
-        return self._get('/tasks')
+            url = '{0}&updated_since={1}'.format(url, updated_since)
+        return self._get(url)
 
     def get_task(self, task_id):
         return self._get('/tasks/{0}'.format(task_id))
@@ -385,8 +385,9 @@ class Harvest(object):
 
     # users
     @property
-    def users(self):
-        return self._get('/people')
+    def users(self, page=1):
+        url ='/people?page={0}'.format(page)
+        return self._get(url)
 
     def userfilter(self, user_id):
         return self._get('/people/{0}'.format(user_id))
