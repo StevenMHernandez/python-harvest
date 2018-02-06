@@ -182,13 +182,14 @@ class Harvest(object):
 
     ## Projects
 
-    def projects(self, client=None):
+    def projects(self, client=None, page=1):
+        url = '/projects?page={0}'.format(page)
         if client:
             # You can filter by client_id and updated_since.
             # For example to show only the projects belonging to client with the id 23445.
             # GET /projects?client=23445
-            return self._get('/projects?client={0}'.format(client))
-        return self._get('/projects')
+            url = '{0}&client={1}'.format(url, client)
+        return self._get(url)
 
     def projects_for_client(self, client_id):
         return self._get('/projects?client={}'.format(client_id))
