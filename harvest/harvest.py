@@ -341,6 +341,14 @@ class Harvest(object):
     def get_client_dashboard_url(self, client_key):
         return '{0}/client/invoices/{1}'.format(self.uri, client_key)
 
+    ## Time Entries
+
+    def time_entries(self, page=1):
+        url = '/time_entries?page={0}'.format(page)
+        return self._get(url)
+
+    ## TODO: build other CRUD functionality for time entries
+
     ## Time Tracking
 
     @property
